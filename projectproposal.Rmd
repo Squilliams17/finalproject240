@@ -1,6 +1,7 @@
 ---
 title: "Project Proposal"
 output: html_document
+author: Will Deley, Anish Mantri, Alexander Teran
 date: "2025-11-11"
 ---
 
@@ -8,22 +9,31 @@ date: "2025-11-11"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Import Data
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+library(tidyverse)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+## A brief description of how the group will communicate and work together.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## The question or questions of interest that motivate the planned study.
+
+
+## The source(s) of data.
+
+
+## A description of the data. Include in this description answers to these questions:
+
+
+## Note: if you get the data from a data repository such as Kaggle, you will need to dig into supplementary information to answer these questions.
+
+
+## Include a description of a graph which will show how the data informs the primary question of interest.
+
+
+## Include a description of a possible model for the data and associated methods of inference or prediction.
+
+
