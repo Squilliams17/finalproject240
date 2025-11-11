@@ -34,6 +34,8 @@ library(tidyverse)
 
 ## The source(s) of data.
 - Source of data: https://www.nba.com/stats
+- Full link: https://www.nba.com/stats/players/shooting?DistanceRange=By%20Zone&PerMode=PerGame&Season=2024-25&SeasonType=Playoffs
+
 ```{r}
 nba_24_25_playoff_shooting_data <- read_csv("./nba_24-25_playoff_shooting_by_zone.csv")
 nba_24_25_playoff_shooting_data
@@ -44,6 +46,7 @@ nba_24_25_playoff_shooting_data
 ## A description of the data. Include in this description answers to these questions:
 - Who collected the data: The National Basketball Association 
 - Data is collected through cameras(Second Spectrum) throughout the NBA playoffs and box scores written down by statisticians during games
+- Data was scraped from the offical NBA stats page into a csv file using a python script
 -  Key Variables : Player/Team || fg_percentage || three_pt_percentage || shot_location || attempts 
 
 **Relation to Research Question:**  

@@ -401,6 +401,7 @@ playoff performance.</li>
 <h2>The source(s) of data.</h2>
 <ul>
 <li>Source of data: <a href="https://www.nba.com/stats" class="uri">https://www.nba.com/stats</a></li>
+<li>Full link: <a href="https://www.nba.com/stats/players/shooting?DistanceRange=By%20Zone&amp;PerMode=PerGame&amp;Season=2024-25&amp;SeasonType=Playoffs" class="uri">https://www.nba.com/stats/players/shooting?DistanceRange=By%20Zone&amp;PerMode=PerGame&amp;Season=2024-25&amp;SeasonType=Playoffs</a></li>
 </ul>
 <pre class="r"><code>nba_24_25_playoff_shooting_data &lt;- read_csv(&quot;./nba_24-25_playoff_shooting_by_zone.csv&quot;)</code></pre>
 <pre><code>## Rows: 219 Columns: 24
@@ -441,6 +442,8 @@ these questions:</h2>
 <li>Data is collected through cameras(Second Spectrum) throughout the
 NBA playoffs and box scores written down by statisticians during
 games</li>
+<li>Data was scraped from the offical NBA stats page into a csv file
+using a python script</li>
 <li>Key Variables : Player/Team || fg_percentage || three_pt_percentage
 || shot_location || attempts</li>
 </ul>
