@@ -402,6 +402,36 @@ playoff performance.</li>
 <ul>
 <li>Source of data: <a href="https://www.nba.com/stats" class="uri">https://www.nba.com/stats</a></li>
 </ul>
+<pre class="r"><code>nba_24_25_playoff_shooting_data &lt;- read_csv(&quot;./nba_24-25_playoff_shooting_by_zone.csv&quot;)</code></pre>
+<pre><code>## Rows: 219 Columns: 24
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (14): Player, Team, In The Paint (Non-RA) FGM, In The Paint (Non-RA) FGA...
+## dbl (10): Age, Restricted Area FGM, Restricted Area FGA, Restricted Area FG%...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>nba_24_25_playoff_shooting_data</code></pre>
+<pre><code>## # A tibble: 219 × 24
+##    Player        Team    Age `Restricted Area FGM` `Restricted Area FGA`
+##    &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;
+##  1 AJ Green      MIL      25                   0                     0  
+##  2 Aaron Gordon  DEN      29                   2.9                   5  
+##  3 Aaron Holiday HOU      28                   0                     0.3
+##  4 Aaron Nesmith IND      25                   0.8                   1.7
+##  5 Aaron Wiggins OKC      26                   0.6                   1.1
+##  6 Ajay Mitchell OKC      23                   0.3                   0.8
+##  7 Al Horford    BOS      39                   1                     1.3
+##  8 Alec Burks    MIA      33                   0                     0  
+##  9 Alex Caruso   OKC      31                   1.2                   2.3
+## 10 Alex Len      LAL      32                   0                     0  
+## # ℹ 209 more rows
+## # ℹ 19 more variables: `Restricted Area FG%` &lt;dbl&gt;,
+## #   `In The Paint (Non-RA) FGM` &lt;chr&gt;, `In The Paint (Non-RA) FGA` &lt;chr&gt;,
+## #   `In The Paint (Non-RA) FG%` &lt;chr&gt;, `Mid-Range FGM` &lt;dbl&gt;,
+## #   `Mid-Range FGA` &lt;dbl&gt;, `Mid-Range FG%` &lt;dbl&gt;, `Left Corner 3. FGM` &lt;chr&gt;,
+## #   `Left Corner 3. FGA` &lt;chr&gt;, `Left Corner 3. FG%` &lt;chr&gt;,
+## #   `Right Corner 3. FGM` &lt;chr&gt;, `Right Corner 3. FGA` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="a-description-of-the-data.-include-in-this-description-answers-to-these-questions" class="section level2">
 <h2>A description of the data. Include in this description answers to
@@ -419,7 +449,10 @@ The variables shot_location and three_pt_percentage capture where shots
 are taken and how effective they are for each player, while team_id
 allows us to aggregate across players to measure team strategy and
 success.</p>
-<p><strong>What a Single Row Represents:</strong></p>
+<p><strong>What a Single Row Represents:</strong><br />
+A single players average performance per game in each of the variabel
+stats in the 2024-25 playoffs. Including data such as age, team, and fg
+% from different shot locations.</p>
 <p><strong>Larger Population:</strong><br />
 This dataset can be thought of as a sample from the broader population
 of all NBA players and teams across seasons.</p>

@@ -34,6 +34,11 @@ library(tidyverse)
 
 ## The source(s) of data.
 - Source of data: https://www.nba.com/stats
+```{r}
+nba_24_25_playoff_shooting_data <- read_csv("./nba_24-25_playoff_shooting_by_zone.csv")
+nba_24_25_playoff_shooting_data
+```
+
 
 
 ## A description of the data. Include in this description answers to these questions:
@@ -45,7 +50,7 @@ library(tidyverse)
 The variables shot_location and three_pt_percentage capture where shots are taken and how effective they are for each player, while team_id allows us to aggregate across players to measure team strategy and success.
 
 **What a Single Row Represents:**  
-
+A single players average performance per game in each of the variabel stats in the 2024-25 playoffs. Including data such as age, team, and fg % from different shot locations.
 
 **Larger Population:**  
 This dataset can be thought of as a sample from the broader population of all NBA players and teams across seasons.
