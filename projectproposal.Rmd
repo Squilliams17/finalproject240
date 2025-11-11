@@ -1,8 +1,8 @@
 ---
-title: "Project Proposal"
+title: "Stat 240 Project Proposal"
 output: html_document
 author: Will Deley, Anish Mantri, Alexander Teran
-date: "2025-11-11"
+date: "`r Sys.Date()`"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,22 +18,65 @@ library(tidyverse)
 
 ## A brief description of how the group will communicate and work together.
 
+- 1.When during the week can the group meet?
+ 
+  Wednesday and Friday at 4 after group members classes are over. 
+  
+- 2.What platforms will the group use to communicate and share documents?
+ 
+ The group has already created a github to share documents and the group has also exchanged phone numbers for mode of communication
+
 
 ## The question or questions of interest that motivate the planned study.
+-  "How does shot location for each team effect success rate in the 2024-2025 NBA playoffs?” Is the question we will be trying to answer
+- This question investigates whether a team’s shooting strategy — specifically, how often shots are taken from different areas on the court influences overall success, measured by shooting efficiency or playoff performance.
 
 
 ## The source(s) of data.
+- Source of data: https://www.nba.com/stats
 
 
 ## A description of the data. Include in this description answers to these questions:
+- Who collected the data: The National Basketball Association 
+- Data is collected through cameras(Second Spectrum) throughout the NBA playoffs and box scores written down by statisticians during games
+-  Key Variables : Player/Team || fg_percentage || three_pt_percentage || shot_location || attempts 
+
+**Relation to Research Question:**  
+The variables shot_location and three_pt_percentage capture where shots are taken and how effective they are for each player, while team_id allows us to aggregate across players to measure team strategy and success.
+
+**What a Single Row Represents:**  
+
+
+**Larger Population:**  
+This dataset can be thought of as a sample from the broader population of all NBA players and teams across seasons.
+
+
 
 
 ## Note: if you get the data from a data repository such as Kaggle, you will need to dig into supplementary information to answer these questions.
 
 
 ## Include a description of a graph which will show how the data informs the primary question of interest.
+We plan to create 2 **scatter plots** where each point represents a team in the 2024–2025 NBA playoffs:
+- **x-axis:** Proportion of shots taken from 3-point range (or near the basket)  
+- **y-axis:** Team success rate (overall field goal percentage or win rate)
+- **Color:** May represent playoff round or average player efficiency
+
+This visualization will help reveal whether teams that take more close-range shots tend to have higher success rates.
 
 
 ## Include a description of a possible model for the data and associated methods of inference or prediction.
+We plan to use **correlation analysis** and possibly a **simple linear regression model** to evaluate whether there is a significant relationship between shot selection and team success rate.
+
+**Example model:**
+\[
+\text{Team Success Rate} = \beta_0 + \beta_1(\text{Proportion of Close Shots}) + \epsilon
+\]
+
+- **Dependent variable:** Team success rate (e.g., FG% or win rate)  
+- **Independent variable:** Proportion of shots taken near the basket  
+
+We will test whether the slope parameter (\(\beta_1\)) is significantly greater than zero, suggesting that shot location strategy impacts team performance.
+
 
 

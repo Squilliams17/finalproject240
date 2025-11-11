@@ -13,7 +13,7 @@
 
 <meta name="date" content="2025-11-11" />
 
-<title>Project Proposal</title>
+<title>Stat 240 Project Proposal</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,7 +350,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Project Proposal</h1>
+<h1 class="title toc-ignore">Stat 240 Project Proposal</h1>
 <h4 class="author">Will Deley, Anish Mantri, Alexander Teran</h4>
 <h4 class="date">2025-11-11</h4>
 
@@ -374,17 +374,55 @@ display: none;
 <div id="a-brief-description-of-how-the-group-will-communicate-and-work-together." class="section level2">
 <h2>A brief description of how the group will communicate and work
 together.</h2>
+<ul>
+<li><p>1.When during the week can the group meet?</p>
+<p>Wednesday and Friday at 4 after group members classes are
+over.</p></li>
+<li><p>2.What platforms will the group use to communicate and share
+documents?</p></li>
+</ul>
+<p>The group has already created a github to share documents and the
+group has also exchanged phone numbers for mode of communication</p>
 </div>
 <div id="the-question-or-questions-of-interest-that-motivate-the-planned-study." class="section level2">
 <h2>The question or questions of interest that motivate the planned
 study.</h2>
+<ul>
+<li>“How does shot location for each team effect success rate in the
+2024-2025 NBA playoffs?” Is the question we will be trying to
+answer</li>
+<li>This question investigates whether a team’s shooting strategy —
+specifically, how often shots are taken from different areas on the
+court influences overall success, measured by shooting efficiency or
+playoff performance.</li>
+</ul>
 </div>
 <div id="the-sources-of-data." class="section level2">
 <h2>The source(s) of data.</h2>
+<ul>
+<li>Source of data: <a href="https://www.nba.com/stats" class="uri">https://www.nba.com/stats</a></li>
+</ul>
 </div>
 <div id="a-description-of-the-data.-include-in-this-description-answers-to-these-questions" class="section level2">
 <h2>A description of the data. Include in this description answers to
 these questions:</h2>
+<ul>
+<li>Who collected the data: The National Basketball Association</li>
+<li>Data is collected through cameras(Second Spectrum) throughout the
+NBA playoffs and box scores written down by statisticians during
+games</li>
+<li>Key Variables : Player/Team || fg_percentage || three_pt_percentage
+|| shot_location || attempts</li>
+</ul>
+<p><strong>Relation to Research Question:</strong><br />
+The variables shot_location and three_pt_percentage capture where shots
+are taken and how effective they are for each player, while team_id
+allows us to aggregate across players to measure team strategy and
+success.</p>
+<p><strong>What a Single Row Represents:</strong></p>
+<p><strong>Larger Population:</strong><br />
+This dataset can be thought of as a sample from the broader population
+of all NBA players and teams across seasons.</p>
 </div>
 <div id="note-if-you-get-the-data-from-a-data-repository-such-as-kaggle-you-will-need-to-dig-into-supplementary-information-to-answer-these-questions." class="section level2">
 <h2>Note: if you get the data from a data repository such as Kaggle, you
@@ -394,10 +432,37 @@ questions.</h2>
 <div id="include-a-description-of-a-graph-which-will-show-how-the-data-informs-the-primary-question-of-interest." class="section level2">
 <h2>Include a description of a graph which will show how the data
 informs the primary question of interest.</h2>
+<p>We plan to create 2 <strong>scatter plots</strong> where each point
+represents a team in the 2024–2025 NBA playoffs: -
+<strong>x-axis:</strong> Proportion of shots taken from 3-point range
+(or near the basket)<br />
+- <strong>y-axis:</strong> Team success rate (overall field goal
+percentage or win rate) - <strong>Color:</strong> May represent playoff
+round or average player efficiency</p>
+<p>This visualization will help reveal whether teams that take more
+close-range shots tend to have higher success rates.</p>
 </div>
 <div id="include-a-description-of-a-possible-model-for-the-data-and-associated-methods-of-inference-or-prediction." class="section level2">
 <h2>Include a description of a possible model for the data and
 associated methods of inference or prediction.</h2>
+<p>We plan to use <strong>correlation analysis</strong> and possibly a
+<strong>simple linear regression model</strong> to evaluate whether
+there is a significant relationship between shot selection and team
+success rate.</p>
+<p><strong>Example model:</strong> <span class="math display">\[
+\text{Team Success Rate} = \beta_0 + \beta_1(\text{Proportion of Close
+Shots}) + \epsilon
+\]</span></p>
+<ul>
+<li><strong>Dependent variable:</strong> Team success rate (e.g., FG% or
+win rate)<br />
+</li>
+<li><strong>Independent variable:</strong> Proportion of shots taken
+near the basket</li>
+</ul>
+<p>We will test whether the slope parameter (<span class="math inline">\(\beta_1\)</span>) is significantly greater than
+zero, suggesting that shot location strategy impacts team
+performance.</p>
 </div>
 
 
