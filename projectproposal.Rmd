@@ -70,7 +70,20 @@ We plan to create 2 **scatter plots** where each point represents a team in the 
 - **y-axis:** Team success rate (overall field goal percentage or win rate)
 - **Color:** May represent playoff round or average player efficiency
 
-This visualization will help reveal whether teams that take more close-range shots tend to have higher success rates.
+This visualization will help reveal whether teams that take more longer-range shots tend to have higher success rates.
+
+We also plan to utilize a bar plot:
+- **x-axis:** Proportion of shots taken from near the basket  
+- **y-axis:** Team success rate (overall field goal percentage or win rate)  
+- **Color:** Team that won the NBA that year  
+This visualization will help reveal whether teams that take more shorter-range shots tend to have higher success rates.
+
+
+We also plan to graph the team with accuracy in FG% and its success rate:
+- **x-axis:** FG%  
+- **y-axis:** Team success rate (overall field goal percentage or win rate)  
+- **Color:** Playoff round  
+This visualization will help reveal whether teams success rate is more jsut tied to FG% rather then a specific location
 
 
 ## Include a description of a possible model for the data and associated methods of inference or prediction.
