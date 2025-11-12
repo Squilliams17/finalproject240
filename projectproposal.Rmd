@@ -30,7 +30,7 @@ library(tidyverse)
 ## The question or questions of interest that motivate the planned study.
 -  "How does shot location for each team effect success rate in the 2024-2025 NBA playoffs?” Is the question we will be trying to answer
 - This question investigates whether a team’s shooting strategy — specifically, how often shots are taken from different areas on the court influences overall success, measured by shooting efficiency or playoff performance.
-
+- "Is there a consistent trend or notable difference in the team that won compared to the other playoff teams?"
 
 ## The source(s) of data.
 - Source of data: https://www.nba.com/stats
