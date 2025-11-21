@@ -182,9 +182,11 @@ if __name__ == "__main__":
     SEASON_TYPE = "Playoffs"
     
     # URL provided by the user
-    TARGET_URL = f"https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season={SEASON}&SeasonType={SEASON_TYPE}&PerMode=PerGame"
+    #TARGET_URL = f"https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season={SEASON}&SeasonType={SEASON_TYPE}&PerMode=PerGame"
+
+    TARGET_URL = f"https://www.nba.com/stats/teams/traditional?PerMode=PerGame&SeasonType={SEASON_TYPE}&Season={SEASON}"
     
-    OUTPUT_FILE = "nba_24-25_playoff_shooting_by_zone.csv"
+    OUTPUT_FILE = "nba_24-25_playoff_team_statistics.csv"
     # ---------------------
 
     data_df = scrape_nba_table(TARGET_URL, SEASON, SEASON_TYPE)

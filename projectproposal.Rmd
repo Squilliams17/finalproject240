@@ -43,6 +43,7 @@ nba_24_25_playoff_shooting_data
 
 
 
+
 ## A description of the data. Include in this description answers to these questions:
 - Who collected the data: The National Basketball Association 
 - Data is collected through cameras(Second Spectrum) throughout the NBA playoffs and box scores written down by statisticians during games

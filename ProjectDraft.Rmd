@@ -9,6 +9,23 @@ author: Will Deley, Anish Mantri, Alexander Teran
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+
+
+```{r, include=FALSE}
+nba_24_25_playoff_shooting_data <- read_csv("./nba_24-25_playoff_shooting_by_zone.csv")
+nba_24_25_playoff_shooting_data
+```
+
+
+```{r, include=FALSE}
+nba_24_25_playoff_team_data <- read_csv("./nba_24-25_playoff_team_statistics.csv")
+nba_24_25_playoff_team_data
+```
+
 
 ## Introduction
 
