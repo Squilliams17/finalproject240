@@ -27,16 +27,32 @@ nba_24_25_playoff_team_data
 ```
 
 
-## Introduction
+# need to clean up the data - convert cols into numeric types before we can do this
+```{r}
+nba_24_25_playoff_shooting_data %>% 
+  mutate(
+    `3 FGM` = `Corner 3 FGM` + `Above the Break 3. FGM`,
+    `3 FGA` = `Corner 3 FGA` + `Above the Break 3. FGA`,
+    `3 FG%` = (AGR_3PM / AGR_3PA) * 100,
+         )
+```
 
 
-## Background
+## Introduction - Anish
 
 
-## Analysis
+## Background - Will
 
 
-## Discussion
+## Analysis - Group
+
+
+```{r}
+```
+
+
+
+## Discussion - Alexander
 
 
 ## Reference
