@@ -159,6 +159,56 @@ cor_above
 
 
 
+
+```{r}
+nba_win_perc <- nba_24_25_playoff_team_data %>%
+  select(Team, `WIN%`)
+
+nba_sum <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  full_join(nba_win_perc, by = "Team") %>%
+  slice_max(order_by = `3 FGA` + `2 FGA`, n = 6, with_ties = TRUE) %>%
+  ungroup()
+
+  
+  
+  
+
+nba_sum
+```
+
+
+
+```{r}
+nba_sum %>%
+  ggplot(aes(x = `2 FGA`, y = `3 FGA`)) +
+  geom_point(size = 3, aes(color = `WIN%`)) + 
+  scale_color_gradientn(
+    colors = c("blue", "dodgerblue","deepskyblue", "white", "orange", "red", "darkred")
+  ) + 
+  labs(
+    y = "3-Point FG Attempted", x = "2-Point FG Attempted", title = "3 vs 2 Point Field Goals Attempted, Win% Gradient in 24-25 Playoffs"
+    )
+
+```
+
+```{r}
+nba_sum %>%
+  ggplot(aes(x = `2 FGM`, y = `3 FGM`)) +
+  geom_point(size = 3, aes(color = `WIN%`)) + 
+  scale_color_gradientn(
+    colors = c("blue", "dodgerblue","deepskyblue", "white", "orange", "red", "darkred")
+  ) +
+  labs(
+    y = "3-Point FG Made", x = "2-Point FG Made", title = "3 vs 2 Point Field Goals Made, Win% Gradient in 24-25 Playoffs"
+    )
+```
+
+
+
+
+
+
 ## Discussion - Alexander
 
 
