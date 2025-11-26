@@ -50,7 +50,29 @@ nba_24_25_playoff_shooting_data %>%
 ```{r}
 ```
 
+```{r}
+nba_summary <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  summarise(
+    total_3FGA = sum(`3 FGA`),
+    total_2FGA = sum(`2 FGA`)
+  ) %>%
+  full_join(
+    nba_24_25_playoff_team_data %>% select(Team, `WIN%`),
+    by = "Team"
+  )
 
+nba_summary %>%
+  mutate(`3_2_pointDifference` = total_3FGA - total_2FGA) %>%
+  ggplot(aes(x = `3_2_pointDifference`, y = `WIN%`, color = Team)) +
+  geom_point(size = 3) +
+  labs(
+    x = "3pt FGA - 2pt FGA",
+    y = "Win Percentage",
+    title = "Impact of 3-pt vs 2-pt Attempts on Playoff Win %"
+  )
+
+```
 
 ## Discussion - Alexander
 
