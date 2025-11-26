@@ -12,6 +12,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, include=FALSE}
 library(tidyverse)
 library(dplyr)
+library(readr)
+library(ggplot2)
+library(ggrepel)
+
 ```
 
 
@@ -50,8 +54,8 @@ nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
 
 ```
 
-## Introduction - Anish
-
+## Introduction
+The NBA playoffs are defined by high-stakes matchups, rapidly shifting strategies, and the constant search for competitive advantages. As modern basketball increasingly emphasizes spacing and perimeter shooting, an important analytical question emerges: To what extent does three-point shooting influence playoff success compared to two-point efficiency? In this report, we analyze team-level and player-level data from the 2024–2025 NBA playoffs to investigate how shooting performance across different zones—such as corner threes, above-the-break threes, and shots in the paint—relates to win percentage and overall postseason success. We aim to determine whether three-point percentage is a stronger predictor of playoff performance than two-point percentage, and which specific shooting areas contribute most to winning. We theorize that three-point efficiency is a significantly stronger predictor of playoff success than two-point efficiency in modern day basketball and that specific high-value shooting zones—particularly corner and above-the-break threes—provide meaningful competitive advantages for teams in the 2024–2025 NBA playoffs.
 
 ## Background - Will
 
@@ -60,6 +64,11 @@ nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
 
 
 ```{r}
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(ggrepel)
 ```
 
 ```{r}
@@ -84,9 +93,71 @@ nba_summary %>%
     y = "Win Percentage",
     title = "Impact of 2-pt vs 3-pt Attempts on Playoff Win %"
   )
-
-
 ```
+
+
+
+
+```{r}
+## Analysis - Team 3PT Shooting by Zone
+
+# Aggregate player-level data to team-level averages for 3PT zones
+team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  summarise(
+    `Left Corner 3 FG%` = mean(as.numeric(`Left Corner 3. FG%`), na.rm = TRUE),
+    `Right Corner 3 FG%` = mean(as.numeric(`Right Corner 3. FG%`), na.rm = TRUE),
+    `Above the Break 3 FG%` = mean(`Above the Break 3. FG%`, na.rm = TRUE)
+  ) %>%
+  pivot_longer(
+    cols = c(`Left Corner 3 FG%`, `Right Corner 3 FG%`, `Above the Break 3 FG%`),
+    names_to = "Zone",
+    values_to = "FG_Percent"
+  )
+```
+This chunk of code is aggregating player-level three-point shooting data into team-level averages for the 2024–2025 NBA playoffs. Because our goal is to analyze how three-point shooting affects team win percentage and playoff success, we need a single shooting percentage per team per zone, rather than having multiple rows per player.
+
+```{r}
+team_zone_avgs <- team_zone_avgs %>%
+  left_join(nba_24_25_playoff_team_data %>% select(Team, `WIN%`), by = "Team")
+# Scatter plot with size proportional to WIN%
+ggplot(team_zone_avgs, aes(x = Zone, y = FG_Percent, color = Team, size = `WIN%`)) +
+  geom_point() +
+  geom_text_repel(aes(label = Team), vjust = -0.5, size = 3, show.legend = FALSE) +
+  labs(
+    title = "NBA 2024-2025 Playoff Teams: 3PT FG% by Zone with WIN%",
+    x = "3-Point Zone",
+    y = "FG%",
+    size = "Win %"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# This code builds on the previous team-level aggregation of three-point shooting percentages and creates a scatter plot visualizing 3PT shooting performance by zone for each playoff team, while also showing team success (win percentage) as the size of the points.((0.2%-Smallest sized point), (0.4% - Medium sized point) (0.6%-Large sized point))
+```
+After these graphing results we infer that the right corner three should be the strongest indicator to a teams success as both OKC and IND made it to the finals and both rank the highest on the right corner three FG%.
+```{r}
+# Make sure team averages and WIN% are joined
+team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  summarise(
+    Left_Corner_3_FG = mean(as.numeric(`Left Corner 3. FG%`), na.rm = TRUE),
+    Right_Corner_3_FG = mean(as.numeric(`Right Corner 3. FG%`), na.rm = TRUE),
+    Above_the_Break_3_FG = mean(`Above the Break 3. FG%`, na.rm = TRUE)
+  ) %>%
+  left_join(nba_24_25_playoff_team_data %>% select(Team, `WIN%`), by = "Team")
+
+# Correlation tests for each zone
+cor_left <- cor.test(team_zone_avgs$Left_Corner_3_FG, team_zone_avgs$`WIN%`)
+cor_right <- cor.test(team_zone_avgs$Right_Corner_3_FG, team_zone_avgs$`WIN%`)
+cor_above <- cor.test(team_zone_avgs$Above_the_Break_3_FG, team_zone_avgs$`WIN%`)
+cor_left
+cor_right
+cor_above
+```
+- As you can see above there is a noticeable to strong correlation among all three zones with the above the break 3 having the strongest correlation. This disproves that the right corner three was the strongest indicator to a teams success as it had the smallest p-value. 
+
+
+
 
 ## Discussion - Alexander
 
