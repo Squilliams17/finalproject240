@@ -78,9 +78,9 @@ nba_summary %>%
   mutate(`3_2_pointDifference` = total_2FGA - total_3FGA) %>%
   ggplot(aes(x = `3_2_pointDifference`, y = `WIN%`, color = Team)) +
   geom_smooth(aes(group = 1), method = "lm", color = "black", se = FALSE) +
-  geom_point(size = 3) +
+  geom_point(aes(size = total_3FGA), alpha = 0.7 ) +
   labs(
-    x = "3pt FGA - 2pt FGA",
+    x = "2pt FGA - 3pt FGA",
     y = "Win Percentage",
     title = "Impact of 2-pt vs 3-pt Attempts on Playoff Win %"
   )
