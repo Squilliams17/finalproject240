@@ -139,8 +139,7 @@ cor_left
 cor_right
 cor_above
 ```
-- As you can see above there is a noticeable to strong correlation among all three zones with the above the break 3 having the strongest correlation. This disproves that the right corner three was the strongest indicator to a teams success as it had the smallest p-value. 
-
+- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant. This suggests that above-the-break three-point efficiency is the most reliable predictor of team success in the 2024–2025 NBA playoffs.
 
 
 
@@ -288,7 +287,7 @@ The correlations are as follows:
 7. 2-point FG made vs. Loss%: r = -0.048, p ≈ 0.65
 8. 3-point FG made vs. Loss%: r = -0.006, p ≈ 0.95
 9. 2-pt minus 3-pt FGA vs. WIN%: r = 0.28, p ≈ 0.34 
-10.2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 
+10. 2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 
 
 These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) do not show statistically significant relationships with team success.
 
