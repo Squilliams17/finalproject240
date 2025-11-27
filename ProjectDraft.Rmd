@@ -292,7 +292,7 @@ The correlations are as follows:
 
 These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) do not show statistically significant relationships with team success.
 
-Additionally, the weak correlation between 2-point and 3-point FGM suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. Overall, this analysis supports the hypothesis that three-point efficiency, especially above-the-break shooting, is more predictive of playoff success than two-point efficiency or raw shot volume.
+Additionally, the weak correlation between 2-point and 3-point FGM suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. Overall, this analysis supports the hypothesis that three-point efficiency, specifically  above-the-break shooting, is more predictive of playoff success than two-point efficiency or raw shot volume.
 
 For future research, analyzing a full regular-season dataset could reveal whether these trends extend beyond the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how strategic shot selection impacts win probability in high-stakes moments.
 
