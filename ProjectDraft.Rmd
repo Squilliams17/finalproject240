@@ -59,10 +59,26 @@ nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
 ## Introduction
 The NBA playoffs are defined by high-stakes matchups, rapidly shifting strategies, and the constant search for competitive advantages. As modern basketball increasingly emphasizes spacing and perimeter shooting, an important analytical question emerges: To what extent does three-point shooting influence playoff success compared to two-point efficiency? In this report, we analyze team-level and player-level data from the 2024–2025 NBA playoffs to investigate how shooting performance across different zones—such as corner threes, above-the-break threes, and shots in the paint—relates to win percentage and overall postseason success. We aim to determine whether three-point percentage is a stronger predictor of playoff performance than two-point percentage, and which specific shooting areas contribute most to winning. We theorize that three-point efficiency is a significantly stronger predictor of playoff success than two-point efficiency in modern day basketball and that specific high-value shooting zones—particularly corner and above-the-break threes—provide meaningful competitive advantages for teams in the 2024–2025 NBA playoffs.
 
-## Background - Will
+## Background
+The two data sets being analyzed are from the official NBA Statistics website, in which data has been meticulously collected over the past several decades. The data is exclusively limited to playoff data, to disregard any intentional loosing for future draft picks, or other reasons, that teams my do in the regular season. There are two data sets that are being analyzed in this report, individual player shooting data that will be referred to as shooting_data, and team performance data that will be referred to as team_data. Both data sets are kept to strictly the 2024-25 Playoff season.
 
+The shooting_data section looks at all players individual shooting statistics, averaged out per game in the playoffs. The columns include the player's name, team, age, and shooting statistics. Each section of shooting statistics comes with three areas: field goals made (FGM), field goals attempted (FGA), and field goal percentage (FG%). The data set contains these statistics for shots taken in different areas of the court. Areas:
+- Restricted Area: Right under the basket, typically layups and dunks. Must be taken in the semi circle painted on the court under the basket.
+- In the Paint (Non - RA): These are shots taken in the painted region of the basketball court, below the free throw line, not including Restricted Area shots. These can possibly be dunks or layups if a player jumps or reaches far enough.
+- Mid-Range: These are shots taken inside of the three point line that do not fall under the previous two categories.
+- Left-Corner 3: Shots taken beyond the 3 point line in the left corner of the court.
+- Right-Corner 3:  Shots taken beyond the 3 point line in the right corner of the court.
+- Corner 3: An aggregate of both Left and Right corner three point shots.
+Above the Break 3: Shots taken beyond the 3 point line that do not consider corner shots, they are taken either directly in-line with the basket or at a partial angle.
+- 3 and 2: Adjusted fields to get aggregate values for 2 and 3 point shooting.
 
-## Analysis - Group
+The team_data section looks at each team's performance in the playoffs, and maintains a team column with each Team's abbreviated name. The columns that are being used in this analysis are WIN%, which is the winning percentage of a team, directly correlating to their success in the playoffs. There are also fields FGM, FGA, FG%, and 3PM, 3PA, 3P% which as in the shooting_data section look into team average shooting statistics per game, at the 2 and 3 point shot levels.
+
+The data being analyzed does leave out certain players from teams that did not play impact, or any minutes. This is to remove players with no shooting data, or just one or two missed shots at the end of an already decided game. There are some unusualities in the data, in which NBA 3 point shooting has risen greatly over the last decade, teams simply put up more 3's, which has been noted as the key strategy of the 2023-24 NBA Playoff Championship Boston Celtics. In addition, there may be a correlation between 2 and 3 point shooting, and certain team strategies may have affected this. Shai Gilgeous-Alexander, the finals MVP and star play for the Championship winning Oklahoma City Thunder is known for driving inside the paint and attempting to draw fouls, for free shots and free throws at a rate higher than many other players. This strategy, if a foul is called, allows the player to either shoot two free throws for 2 points, or (if they make the basket), it counts and they can shoot one additional free throw, gaining the same amount of points as a 3-point shot would have made. Strategies to raise the expected value on any given play such as this are changing yearly in the NBA, and thus 3-point shooting is on the rise. Other discrepancies note that "free shots", such as break away lay-ups and dunks (usually in the Restricted Area) are always two points, and with no defense are almost certain to go in the basket. These kinds of shots can swing momentum, and teams who accumulate them are essentially gaining free points throughout the game. As a result, data may show that this shot is influential in game outcome, while it is more of a defensive outcome from a player stealing a ball, rather than an offensive shot.
+
+In the following of this report, we will delve into the specifics of this data set, analyzing how 3-point shooting affects a given team's chances to win in the 2024-25 NBA Playoffs. The analysis will inquire about the proportion of 3 vs 2 point shots, and how they affect a team's winning percentage. In addition we will look at specific 3-point shooting data, and determine where the most affective areas of the court are for teams winning this year. We will look at the analysis of this data to determine whether 3-point shooting is as decisive of a factor towards winning in the NBA playoffs as popular media makes it out to be.
+
+## Analysis
 
 
 ```{r}
@@ -231,11 +247,12 @@ nba_24_25_playoff_team_data %>%
 
 After these graphs we can infer that 3 point shooting alone does not directly correlate to teams achieveing a high winning percentage in the playoffs. The charts show teams are most efficient when shooting the most 2 and 3 point field goals, which makes sense at that directly means they are scoring more points throughout the game. There is definetly an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game, while there are teams, such as the Boston Celtics (2023-24 NBA Champions), who shoot a much lower average of 2 point field goals, while being able to maintain a high winning percentage.
 
+
 ```{r}
 #Looking at the correlation between 2 and 3 point shots
-cor_2v3 <- cor.test(nba_24_25_playoff_team_data$FGM - nba_24_25_playoff_team_data$`3PM`, nba_24_25_playoff_team_data$`3PM`)
-cor_2vWin <- cor.test(nba_24_25_playoff_team_data$FGM - nba_24_25_playoff_team_data$`3PM`, nba_24_25_playoff_team_data$`WIN%`)
-cor_3vWin <- cor.test(nba_24_25_playoff_team_data$`3PM`, nba_24_25_playoff_team_data$`WIN%`)
+cor_2v3 <- cor.test(nba_sum$`2 FGM`, nba_sum$`3 FGM`)
+cor_2vWin <- cor.test(nba_sum$`2 FGM`, nba_sum$`WIN%`)
+cor_3vWin <- cor.test(nba_sum$`3 FGM`, nba_sum$`WIN%`)
 
 #Looking at the correlation between 2 and 3 point shots
 cor_2v3
@@ -247,8 +264,8 @@ cor_3vWin
 
 
 
-cor_2vLoss <- cor.test(nba_24_25_playoff_team_data$FGM - nba_24_25_playoff_team_data$`3PM`, 1 - nba_24_25_playoff_team_data$`WIN%`)
-cor_3vLoss <- cor.test(nba_24_25_playoff_team_data$`3PM`, 1 - nba_24_25_playoff_team_data$`WIN%`)
+cor_2vLoss <- cor.test(nba_sum$`2 FGM`, 1 - nba_sum$`WIN%`)
+cor_3vLoss <- cor.test(nba_sum$`3 FGM`, 1 - nba_sum$`WIN%`)
 
 #Looking at the correlation between 2 point shots and Loosing
 cor_2vLoss
@@ -256,7 +273,7 @@ cor_2vLoss
 cor_3vLoss
 
 ```
-The highest correlation received is a correlation between the amount of 2 and 3 point shots in the NBA playoffs. Thus, for the most part teams tend to favor one type of shot. This can possibly affect the other correlations but for now we will continue to compute. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals. Inversely, it has a larger impact on the loss % of teams as well. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, loosing playoff stints. However, since OKC won the Championship, any many other winning teams fell beyond the 2-point mean, this is almost certainly a telling sign for last year's playoffs that making 2 point field goals had a greater impact.
+The is a possibly non-negligible correlation received between the amount of 2 and 3 point shots in the NBA playoffs. Thus, for the most part teams tend to favor one type of shot. This can possibly affect the other correlations but for now we will continue to compute. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals. Inversely making more 2 point shots has a larger negative correlation on the loss % of teams as well. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, loosing playoff stints. However, since OKC won the Championship, any many other winning teams did not fall beyond the 2-point mean, large amounts of 2-point shots seem to have a greater correlation to winning teams.
 
 
 
@@ -264,9 +281,11 @@ The highest correlation received is a correlation between the amount of 2 and 3 
 
 
 
-## Discussion - Alexander
+## Discussion
 There appear to be pockets of high-win-rate players in all four quadrants of the dataset, which makes sense because basketball is a team sport with varied offensive strategies. However, many of the most successful performances cluster in the upper-right quadrant, indicating that high volumes of both 2-Point Field Goals Made and 3-Point Field Goals Made contribute strongly to playoff success. This aligns with the second graph (Impact of 2-pt vs. 3-pt Attempts on Playoff Win %), which shows that higher volumes of 2-Point Field Goal Attempts relative to 3-Point FGA are generally associated with a higher win percentage. The team-specific graph further supports this finding: nearly all of the highest-winning teams (CLE, MIL, MIN, IND, LAC, OKC) had above-average 2-Point Field Goals Made. Taken together, the three graphs suggest that successful teams depend on both 3-point and 2-point production, with 2-Point FGM playing a particularly important role. Maintaining a balanced and effective scoring profile across both areas appears vital for maximizing playoff win percentage.
 In our initial thesis, we stated that higher 3-point efficiency would be more important than 2-point efficiency. Our results show a more nuanced conclusion: although both areas matter, teams generally need significantly more 2-Point FGA than 3-Point FGA to perform well in the playoffs. We also found that the right-corner three is the most impactful three-point zone, though all 3-point shooting zones show a strong correlation with win percentage. This partially supports our original thesis but highlights that 2-point volume and consistency carry substantial weight as well.
 For future analysis, it would be interesting to run a similar study using a full regular-season dataset to see whether these trends remain consistent outside the playoffs. Another extension could examine timing—specifically, whether clutch 3-pointers produce stronger correlations with success than regular 2-point attempts. Understanding how late-game shot selection affects win probability could reveal additional insights beyond overall scoring volume.
 
 ## Reference
+1. NBA Player Average Shooting Data by Zone, 2024-25 Playoffs. ^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame]
+2. NBA Team Average Data, 2024-25 Playoffs. ^[https://www.nba.com/stats/teams/traditional?PerMode=PerGame&SeasonType=Playoffs&Season=2024-25]
