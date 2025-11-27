@@ -9,6 +9,9 @@ author: Will Deley, Anish Mantri, Alexander Teran
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+
 ```{r, include=FALSE}
 library(tidyverse)
 library(dplyr)
@@ -34,8 +37,7 @@ nba_24_25_playoff_team_data
 ```
 
 
-# need to clean up the data - convert cols into numeric types before we can do this
-```{r}
+```{r, include=FALSE}
 nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
   mutate(across(
     c(`Restricted Area FGM`, `Restricted Area FGA`,
@@ -66,14 +68,6 @@ The NBA playoffs are defined by high-stakes matchups, rapidly shifting strategie
 
 
 ```{r}
-library(tidyverse)
-library(dplyr)
-library(readr)
-library(ggplot2)
-library(ggrepel)
-```
-
-```{r}
 nba_summary <- nba_24_25_playoff_shooting_data %>%
   group_by(Team) %>%
   summarise(
@@ -100,7 +94,7 @@ nba_summary %>%
 
 
 
-```{r}
+```{r, include=FALSE}
 ## Analysis - Team 3PT Shooting by Zone
 
 # Aggregate player-level data to team-level averages for 3PT zones
