@@ -139,7 +139,7 @@ cor_left
 cor_right
 cor_above
 ```
-- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant. This suggests that above-the-break three-point efficiency is the most reliable predictor of team success in the 2024–2025 NBA playoffs.
+- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant.
 
 
 
