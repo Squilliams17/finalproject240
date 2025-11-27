@@ -287,14 +287,14 @@ The correlations are as follows:
 6. 2 FGM vs 3 FGM: r = -0.124, p ≈ 0.23
 7. 2-point FG made vs. Loss%: r = -0.048, p ≈ 0.65
 8. 3-point FG made vs. Loss%: r = -0.006, p ≈ 0.95
-9. 2-pt minus 3-pt FGA vs. WIN%: r = 0.28, p ≈ 0.34
-10.2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 (not statistically significant)
+9. 2-pt minus 3-pt FGA vs. WIN%: r = 0.28, p ≈ 0.34 
+10.2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 
 
-These results suggest that three-point shooting efficiency—rather than raw 2-point or 3-point shot volume is a more reliable predictor of playoff success. Among the three-point zones, above-the-break threes show the strongest and statistically significant correlation with win percentage, while corner threes show moderate but less significant correlations, as also visualized in the earlier graphs.
+These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) do not show statistically significant relationships with team success.
 
-In contrast, raw made field goals (2-point or 3-point) and the difference between 2-point and 3-point attempts appear less critical in explaining team success, as they do not strongly correlate with win percentage. Additionally, the weak correlation between 2-point and 3-point FGM indicates that while teams may favor one type of shot over another, this specialization alone does not strongly predict playoff outcomes. Overall, this analysis supports the original hypothesis that three-point efficiency matters more than two-point efficiency in determining team success in the playoffs
+Additionally, the weak correlation between 2-point and 3-point FGM suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. Overall, this analysis supports the hypothesis that three-point efficiency, especially above-the-break shooting, is more predictive of playoff success than two-point efficiency or raw shot volume.
 
-For future research, analyzing a full regular-season dataset could determine whether these trends extend beyond the playoffs or other trends may appear. Investigating shot timing, such as clutch three-pointers versus routine two-point attempts, may provide deeper insight into how strategic shot selection affects win probability in high-stakes moments.
+For future research, analyzing a full regular-season dataset could reveal whether these trends extend beyond the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how strategic shot selection impacts win probability in high-stakes moments.
 
 ## Reference
 1. NBA Player Average Shooting Data by Zone, 2024-25 Playoffs. ^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame]
