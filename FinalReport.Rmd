@@ -1,13 +1,16 @@
 ---
 title: "Project Draft"
 output: html_document
-date: "2025-11-21"
+date: "2025-12-9"
 author: Will Deley, Anish Mantri, Alexander Teran
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -34,8 +37,7 @@ nba_24_25_playoff_team_data
 ```
 
 
-# need to clean up the data - convert cols into numeric types before we can do this
-```{r}
+```{r, include=FALSE}
 nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
   mutate(across(
     c(`Restricted Area FGM`, `Restricted Area FGA`,
@@ -79,41 +81,6 @@ The data being analyzed does leave out certain players from teams that did not p
 In the following of this report, we will delve into the specifics of this data set, analyzing how 3-point shooting affects a given team's chances to win in the 2024-25 NBA Playoffs. The analysis will inquire about the proportion of 3 vs 2 point shots, and how they affect a team's winning percentage. In addition we will look at specific 3-point shooting data, and determine where the most affective areas of the court are for teams winning this year. We will look at the analysis of this data to determine whether 3-point shooting is as decisive of a factor towards winning in the NBA playoffs as popular media makes it out to be.
 
 ## Analysis
-
-
-```{r}
-library(tidyverse)
-library(dplyr)
-library(readr)
-library(ggplot2)
-library(ggrepel)
-```
-
-```{r}
-nba_summary <- nba_24_25_playoff_shooting_data %>%
-  group_by(Team) %>%
-  summarise(
-    total_3FGA = sum(`3 FGA`),
-    total_2FGA = sum(`2 FGA`)
-  ) %>%
-  full_join(
-    nba_24_25_playoff_team_data %>% select(Team, `WIN%`),
-    by = "Team"
-  )
-
-nba_summary %>%
-  mutate(`3_2_pointDifference` = total_2FGA - total_3FGA) %>%
-  ggplot(aes(x = `3_2_pointDifference`, y = `WIN%`, color = Team)) +
-  geom_smooth(aes(group = 1), method = "lm", color = "black", se = FALSE) +
-  geom_point(size = 3) +
-  labs(
-    x = "3pt FGA - 2pt FGA",
-    y = "Win Percentage",
-    title = "Impact of 2-pt vs 3-pt Attempts on Playoff Win %"
-  )
-```
-
-
 
 
 ```{r}
@@ -172,8 +139,7 @@ cor_left
 cor_right
 cor_above
 ```
-- As you can see above there is a noticeable to strong correlation among all three zones with the above the break 3 having the strongest correlation. This disproves that the right corner three was the strongest indicator to a teams success as it had the smallest p-value. 
-
+- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant.
 
 
 
@@ -277,14 +243,57 @@ The is a possibly non-negligible correlation received between the amount of 2 an
 
 
 
+```{r}
+nba_summary <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  summarise(
+    total_3FGA = sum(`3 FGA`),
+    total_2FGA = sum(`2 FGA`),
+    `2FGA%`=sum(`2 FGM`)/sum(`2 FGA`)
+  ) %>%
+  full_join(
+    nba_24_25_playoff_team_data %>% select(Team, `WIN%`),
+    by = "Team"
+  )%>%mutate(`3_2_pointDifference` = total_2FGA - total_3FGA)
+
+nba_summary %>%
+  ggplot(aes(x = `3_2_pointDifference`, y = `WIN%`, color = Team)) +
+  geom_point(size = 3) +
+  labs(
+    x = "2pt FGA - 3pt FGA",
+    y = "Win Percentage",
+    title = "Impact of 2-pt vs 3-pt Attempts on Playoff Win %"
+  )
 
 
+cor_3_2_pointDifference <- cor.test(nba_summary$`WIN%`, nba_summary$`3_2_pointDifference`)
+cor_3_2_pointDifference
 
+cor_2FGA_percent_vs_Win  <- cor.test(nba_summary$`WIN%`, nba_summary$`2FGA%`)
+cor_2FGA_percent_vs_Win 
+
+```
+While the results of the above graph may appear to show a correlation, a correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is weak (r ≈ 0.28, p ≈ 0.31).
 
 ## Discussion
-There appear to be pockets of high-win-rate players in all four quadrants of the dataset, which makes sense because basketball is a team sport with varied offensive strategies. However, many of the most successful performances cluster in the upper-right quadrant, indicating that high volumes of both 2-Point Field Goals Made and 3-Point Field Goals Made contribute strongly to playoff success. This aligns with the second graph (Impact of 2-pt vs. 3-pt Attempts on Playoff Win %), which shows that higher volumes of 2-Point Field Goal Attempts relative to 3-Point FGA are generally associated with a higher win percentage. The team-specific graph further supports this finding: nearly all of the highest-winning teams (CLE, MIL, MIN, IND, LAC, OKC) had above-average 2-Point Field Goals Made. Taken together, the three graphs suggest that successful teams depend on both 3-point and 2-point production, with 2-Point FGM playing a particularly important role. Maintaining a balanced and effective scoring profile across both areas appears vital for maximizing playoff win percentage.
-In our initial thesis, we stated that higher 3-point efficiency would be more important than 2-point efficiency. Our results show a more nuanced conclusion: although both areas matter, teams generally need significantly more 2-Point FGA than 3-Point FGA to perform well in the playoffs. We also found that the right-corner three is the most impactful three-point zone, though all 3-point shooting zones show a strong correlation with win percentage. This partially supports our original thesis but highlights that 2-point volume and consistency carry substantial weight as well.
-For future analysis, it would be interesting to run a similar study using a full regular-season dataset to see whether these trends remain consistent outside the playoffs. Another extension could examine timing—specifically, whether clutch 3-pointers produce stronger correlations with success than regular 2-point attempts. Understanding how late-game shot selection affects win probability could reveal additional insights beyond overall scoring volume.
+The correlations are as follows:
+
+1. Above-the-break 3-point FG% vs. WIN%: r = 0.52, p ≈ 0.038 (strongest among 3-point zones)
+2. Left-corner 3 FG% vs. WIN%: r = 0.47, p ≈ 0.067
+3. Right-corner 3 FG% vs. WIN%: r = 0.44, p ≈ 0.088
+4. 2-point FG made vs. WIN%: r = 0.048, p ≈ 0.65
+5. 3-point FG made vs. WIN%: r = 0.006, p ≈ 0.95
+6. 2 FGM vs 3 FGM: r = -0.124, p ≈ 0.23
+7. 2-point FG made vs. Loss%: r = -0.048, p ≈ 0.65
+8. 3-point FG made vs. Loss%: r = -0.006, p ≈ 0.95
+9. 2-pt minus 3-pt FGA vs. WIN%: r = 0.28, p ≈ 0.34 
+10. 2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 
+
+These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) do not show statistically significant relationships with team success.
+
+Additionally, the weak correlation between 2-point and 3-point FGM suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. Overall, this analysis supports the hypothesis that three-point efficiency, specifically  above-the-break shooting, is more predictive of playoff success than two-point efficiency or raw shot volume.
+
+For future research, analyzing a full regular-season dataset could reveal whether these trends extend beyond the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how strategic shot selection impacts win probability in high-stakes moments.
 
 ## Reference
 1. NBA Player Average Shooting Data by Zone, 2024-25 Playoffs. ^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame]
