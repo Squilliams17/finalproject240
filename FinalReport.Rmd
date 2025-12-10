@@ -67,9 +67,23 @@ nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
 The NBA playoffs are defined by high-stakes matchups, rapidly shifting strategies, and the constant search for competitive advantages. As modern basketball increasingly emphasizes spacing and perimeter shooting, an important analytical question emerges: To what extent does three-point shooting influence playoff success compared to two-point efficiency? In this report, we analyze team-level and player-level data from the 2024–2025 NBA playoffs to investigate how shooting performance across different zones—such as corner threes, above-the-break threes, and shots in the paint—relates to win percentage and overall postseason success. We aim to determine whether three-point percentage is a stronger predictor of playoff performance than two-point percentage, and which specific shooting areas contribute most to winning. We theorize that three-point efficiency is a significantly stronger predictor of playoff success than two-point efficiency in modern day basketball and that specific high-value shooting zones—particularly corner and above-the-break threes—provide meaningful competitive advantages for teams in the 2024–2025 NBA playoffs.
 
 ## Background
+<<<<<<< HEAD
 The two data sets being analyzed are from the official NBA Statistics website, in which data has been meticulously collected over the past several decades. The data is exclusively limited to playoff data, to disregard any intentional losing for future draft picks, or other reasons, that teams my do in the regular season. There are two data sets that are being analyzed in this report, individual player shooting data that will be referred to as shooting_data, and team performance data that will be referred to as team_data. Both data sets are kept to strictly the 2024-25 Playoff season. The data consists of 16 teams, 76 games, and a total of 96 players (top 6 players of each team). 
+=======
+The two data sets being analyzed are from the official NBA Statistics website, in which data has been meticulously collected over the past several decades. The data is exclusively limited to playoff data, to disregard any intentional loosing for future draft picks, or other reasons, that teams my do in the regular season. There are two data sets that are being analyzed in this report, individual player shooting data that will be referred to as shooting_data^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame], and team performance data that will be referred to as team_data^[https://www.nba.com/stats/teams/traditional?PerMode=PerGame&SeasonType=Playoffs&Season=2024-25]
+. Both data sets are kept to strictly the 2024-25 Playoff season.
 
-The shooting_data section looks at all players individual shooting statistics, averaged out per game in the playoffs. The columns include the player's name, team, age, and shooting statistics. Each section of shooting statistics comes with three areas: field goals made (FGM), field goals attempted (FGA), and field goal percentage (FG%). The data set contains these statistics for shots taken in different areas of the court. Areas:
+
+Below is a visualization of the column sections for the shoot_data data set.
+```{r, echo=FALSE}
+shooting_data_table <- tibble(rows = c("Player", "Restricred Area", "In the Paint (Non-RA)", "Mid-Range", "Left Corner 3", "Right Corner 3", "Corner 3", "Abover the Break 3", "2PT Field Goal", "3PT Field Goal"))
+print(shooting_data_table)
+```
+
+
+The shooting_data section looks at all players individual shooting statistics, averaged out per game in the playoffs. The first column name, Player, representes columns in the data set for the Player's description, include the player's name, team, and age. The other columns visualized above are locations of shots accross the court, with each section having three statistics FGM (Field Goals Made), FGA (Field Goals Attempted), and FG% (Field Goal %). 
+>>>>>>> f72577ab9877ed84195d591bf4dc855479440cf8
+
 - Restricted Area: Right under the basket, typically layups and dunks. Must be taken in the semi circle painted on the court under the basket.
 - In the Paint (Non - RA): These are shots taken in the painted region of the basketball court, below the free throw line, not including Restricted Area shots. These can possibly be dunks or layups if a player jumps or reaches far enough.
 - Mid-Range: These are shots taken inside of the three point line that do not fall under the previous two categories.
@@ -77,9 +91,9 @@ The shooting_data section looks at all players individual shooting statistics, a
 - Right-Corner 3:  Shots taken beyond the 3 point line in the right corner of the court.
 - Corner 3: An aggregate of both Left and Right corner three point shots.
 Above the Break 3: Shots taken beyond the 3 point line that do not consider corner shots, they are taken either directly in-line with the basket or at a partial angle.
-- 3 and 2: Adjusted fields to get aggregate values for 2 and 3 point shooting.
+- 2 and 3 PT Field Goals: Aggregated fields to get values for 2 and 3 point shooting per game in their entirety.
 
-The team_data section looks at each team's performance in the playoffs, and maintains a team column with each Team's abbreviated name. The columns that are being used in this analysis are WIN%, which is the winning percentage of a team, directly correlating to their success in the playoffs. There are also fields FGM, FGA, FG%, and 3PM, 3PA, 3P% which as in the shooting_data section look into team average shooting statistics per game, at the 2 and 3 point shot levels.
+The team_data section looks at each team's performance in the playoffs, and maintains a team column with each Team's abbreviated name. The columns that are being used in this analysis are WIN%, which is the winning percentage of a team, directly correlating to their success in the playoffs. There are also ggregated fields to get values for 2 and 3 point shooting per game in their entirety for each team, structed the same as shooting_data classifies it per player.
 
 The data being analyzed does leave out certain players from teams that did not play impact, or any minutes. This is to remove players with no shooting data, or just one or two missed shots at the end of an already decided game. There are some unusualities in the data, in which NBA 3 point shooting has risen greatly over the last decade, teams simply put up more 3's, which has been noted as the key strategy of the 2023-24 NBA Playoff Championship Boston Celtics. In addition, there may be a correlation between 2 and 3 point shooting, and certain team strategies may have affected this. Shai Gilgeous-Alexander, the finals MVP and star play for the Championship winning Oklahoma City Thunder is known for driving inside the paint and attempting to draw fouls, for free shots and free throws at a rate higher than many other players. This strategy, if a foul is called, allows the player to either shoot two free throws for 2 points, or (if they make the basket), it counts and they can shoot one additional free throw, gaining the same amount of points as a 3-point shot would have made. Strategies to raise the expected value on any given play such as this are changing yearly in the NBA, and thus 3-point shooting is on the rise. Other discrepancies note that "free shots", such as break away lay-ups and dunks (usually in the Restricted Area) are always two points, and with no defense are almost certain to go in the basket. These kinds of shots can swing momentum, and teams who accumulate them are essentially gaining free points throughout the game. As a result, data may show that this shot is influential in game outcome, while it is more of a defensive outcome from a player stealing a ball, rather than an offensive shot.
 
@@ -305,5 +319,5 @@ Additionally, the weak correlation between 2-point and 3-point FGM suggests that
 For future research, analyzing a full regular-season dataset could reveal whether these trends extend beyond the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how strategic shot selection impacts win probability in high-stakes moments.
 
 ## Reference
-1. NBA Player Average Shooting Data by Zone, 2024-25 Playoffs. ^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame]
-2. NBA Team Average Data, 2024-25 Playoffs. ^[https://www.nba.com/stats/teams/traditional?PerMode=PerGame&SeasonType=Playoffs&Season=2024-25]
+1. NBA Player Average Shooting Data by Zone, 2024-25 Playoffs. 
+2. NBA Team Average Data, 2024-25 Playoffs.
