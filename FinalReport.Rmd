@@ -121,9 +121,6 @@ In the following of this report, we will delve into the specifics of this data s
 
 # Analysis
 
-## Analysis - Team 3PT Shooting by Zone
-
-## Aggregate player-level data to team-level averages for 3PT zones
 ```{r, include=FALSE}
 
 team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
@@ -294,7 +291,7 @@ cor_2FGA_percent_vs_Win  <- cor.test(nba_summary$`WIN%`, nba_summary$`2FGA%`)
 cor_2FGA_percent_vs_Win 
 
 ```
-A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is weak (r ≈ 0.28, p ≈ 0.31).
+A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is also not stastically rlevant.
 
 
 
