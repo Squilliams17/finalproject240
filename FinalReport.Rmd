@@ -1,5 +1,5 @@
 ---
-title: "Project Draft"
+title: "Final Report"
 output: html_document
 date: "2025-12-9"
 author: Will Deley, Anish Mantri, Alexander Teran
@@ -80,13 +80,13 @@ The data being analyzed does leave out certain players from teams that did not p
 
 In the following of this report, we will delve into the specifics of this data set, analyzing how 3-point shooting affects a given team's chances to win in the 2024-25 NBA Playoffs. The analysis will inquire about the proportion of 3 vs 2 point shots, and how they affect a team's winning percentage. In addition we will look at specific 3-point shooting data, and determine where the most affective areas of the court are for teams winning this year. We will look at the analysis of this data to determine whether 3-point shooting is as decisive of a factor towards winning in the NBA playoffs as popular media makes it out to be.
 
-## Analysis
+# Analysis
 
-
-```{r}
 ## Analysis - Team 3PT Shooting by Zone
 
-# Aggregate player-level data to team-level averages for 3PT zones
+## Aggregate player-level data to team-level averages for 3PT zones
+```{r, include=FALSE}
+
 team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
   group_by(Team) %>%
   summarise(
@@ -99,10 +99,11 @@ team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
     names_to = "Zone",
     values_to = "FG_Percent"
   )
+# This chunk of code is aggregating player-level three-point shooting data into team-level averages for the 2024–2025 NBA playoffs. Because our goal is to analyze how three-point shooting affects team win percentage and playoff success, we need a single shooting percentage per team per zone, rather than having multiple rows per player.
 ```
-This chunk of code is aggregating player-level three-point shooting data into team-level averages for the 2024–2025 NBA playoffs. Because our goal is to analyze how three-point shooting affects team win percentage and playoff success, we need a single shooting percentage per team per zone, rather than having multiple rows per player.
 
-```{r}
+
+```{r, echo=FALSE}
 team_zone_avgs <- team_zone_avgs %>%
   left_join(nba_24_25_playoff_team_data %>% select(Team, `WIN%`), by = "Team")
 # Scatter plot with size proportional to WIN%
@@ -119,8 +120,8 @@ ggplot(team_zone_avgs, aes(x = Zone, y = FG_Percent, color = Team, size = `WIN%`
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 # This code builds on the previous team-level aggregation of three-point shooting percentages and creates a scatter plot visualizing 3PT shooting performance by zone for each playoff team, while also showing team success (win percentage) as the size of the points.((0.2%-Smallest sized point), (0.4% - Medium sized point) (0.6%-Large sized point))
 ```
-After these graphing results we infer that the right corner three should be the strongest indicator to a teams success as both OKC and IND made it to the finals and both rank the highest on the right corner three FG%.
-```{r}
+
+```{r, include=FALSE}
 # Make sure team averages and WIN% are joined
 team_zone_avgs <- nba_24_25_playoff_shooting_data %>%
   group_by(Team) %>%
@@ -139,7 +140,7 @@ cor_left
 cor_right
 cor_above
 ```
-- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant.
+- Among the three-point zones, only above-the-break three-point shooting shows a statistically significant correlation with playoff win percentage (r ≈ 0.52, p ≈ 0.038), while corner threes, though positively correlated, are not statistically significant enough.
 
 
 
@@ -157,7 +158,7 @@ nba_sum <- nba_24_25_playoff_shooting_data %>%
 
 
 
-```{r}
+```{r, echo=FALSE}
 #put data into SharedData so that graph can be interactive
 nba_shared_data <- SharedData$new(nba_sum, key = ~Team, group = "NBA_Data")
 
@@ -195,7 +196,7 @@ browsable(
 
 
 
-```{r}
+```{r, echo=FALSE}
 
 nba_24_25_playoff_team_data %>%
   ggplot(aes(x = `FGM`-`3PM`, y = `3PM`)) +
@@ -214,7 +215,7 @@ nba_24_25_playoff_team_data %>%
 After these graphs we can infer that 3 point shooting alone does not directly correlate to teams achieveing a high winning percentage in the playoffs. The charts show teams are most efficient when shooting the most 2 and 3 point field goals, which makes sense at that directly means they are scoring more points throughout the game. There is definetly an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game, while there are teams, such as the Boston Celtics (2023-24 NBA Champions), who shoot a much lower average of 2 point field goals, while being able to maintain a high winning percentage.
 
 
-```{r}
+```{r, include=FALSE}
 #Looking at the correlation between 2 and 3 point shots
 cor_2v3 <- cor.test(nba_sum$`2 FGM`, nba_sum$`3 FGM`)
 cor_2vWin <- cor.test(nba_sum$`2 FGM`, nba_sum$`WIN%`)
@@ -243,7 +244,7 @@ The is a possibly non-negligible correlation received between the amount of 2 an
 
 
 
-```{r}
+```{r, include=FALSE}
 nba_summary <- nba_24_25_playoff_shooting_data %>%
   group_by(Team) %>%
   summarise(
