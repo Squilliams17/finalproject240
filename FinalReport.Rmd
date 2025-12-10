@@ -194,7 +194,7 @@ nba_3v2FGM_plot <- nba_shared_data %>%
   geom_vline(xintercept = mean(nba_sum$`2 FGM`), linetype = "dashed", alpha = 0.5) +
   geom_hline(yintercept = mean(nba_sum$`3 FGM`), linetype = "dashed", alpha = 0.5) +
   labs(
-    y = "3-Point FG Made", x = "2-Point FG Made", title = "3 vs 2 Point Field Goals Made, Win% Gradient in 24-25 Playoffs"
+    y = "3-Point FG Made", x = "2-Point FG Made", title = "3 vs 2 Point Field Goals Made, by Player in 24-25 Playoffs"
     )
 
 interactive <- ggplotly(nba_3v2FGM_plot, tooltip = c("text", "x", "y"))
@@ -300,7 +300,7 @@ While the results of the above graph may appear to show a correlation, a correla
 
 
 
-```{r}
+```{r, include=FALSE}
 regression_data <- nba_24_25_playoff_team_data %>%
   mutate(z_2p = scale(`FGM`),
          z_3p = scale(`3PM`)
