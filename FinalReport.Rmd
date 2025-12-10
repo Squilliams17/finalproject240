@@ -7,8 +7,8 @@ author: Will Deley, Anish Mantri, Alexander Teran
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
 ```
-
 
 
 
@@ -21,6 +21,7 @@ library(ggrepel)
 library(plotly)
 library(crosstalk)
 library(htmltools)
+library(car)
 ```
 
 
@@ -166,7 +167,6 @@ Among the three-point zones, only above-the-break three-point shooting shows a s
 
 
 
-
 ```{r, include=FALSE}
 nba_win_perc <- nba_24_25_playoff_team_data %>%
   select(Team, `WIN%`)
@@ -297,6 +297,28 @@ cor_2FGA_percent_vs_Win
 
 ```
 While the results of the above graph may appear to show a correlation, a correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is weak (r ≈ 0.28, p ≈ 0.31).
+
+
+
+```{r}
+regression_data <- nba_24_25_playoff_team_data %>%
+  mutate(z_2p = scale(`FGM`),
+         z_3p = scale(`3PM`)
+         ) %>%
+  select(Team, z_2p, z_3p, `WIN%`)
+regression_data
+
+
+lm_team <- lm(`WIN%` ~ z_2p + z_3p, data = regression_data)
+summary(lm_team)
+
+
+
+linearHypothesis(lm_team, "z_2p = z_3p")
+```
+
+
+
 
 ## Discussion
 The correlations are as follows:
