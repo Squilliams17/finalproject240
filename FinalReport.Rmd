@@ -62,6 +62,24 @@ nba_24_25_playoff_shooting_data <- nba_24_25_playoff_shooting_data %>%
     `2 FG%` = ifelse(`2 FGA` == 0, 0, (`2 FGM` / `2 FGA`) * 100)
   )
 
+nba_summary <- nba_24_25_playoff_shooting_data %>%
+  group_by(Team) %>%
+  summarise(
+    total_3FGA = sum(`3 FGA`),
+    total_3FGM = sum(`3 FGM`),
+    total_2FGA = sum(`2 FGA`),
+    total_2FGM = sum(`2 FGM`),
+    `2FGA%` = total_2FGM / total_2FGA
+  ) %>%
+  full_join(
+    nba_24_25_playoff_team_data %>% select(Team, `WIN%`),
+    by = "Team"
+  ) %>%
+  mutate(`3_2_pointDifference` = total_2FGA - total_3FGA)
+
+
+
+
 ```
 
 ## Introduction
@@ -268,27 +286,6 @@ The is a possibly non-negligible correlation received between the amount of 2 an
 
 
 ```{r, include=FALSE}
-nba_summary <- nba_24_25_playoff_shooting_data %>%
-  group_by(Team) %>%
-  summarise(
-    total_3FGA = sum(`3 FGA`),
-    total_2FGA = sum(`2 FGA`),
-    `2FGA%`=sum(`2 FGM`)/sum(`2 FGA`)
-  ) %>%
-  full_join(
-    nba_24_25_playoff_team_data %>% select(Team, `WIN%`),
-    by = "Team"
-  )%>%mutate(`3_2_pointDifference` = total_2FGA - total_3FGA)
-
-nba_summary %>%
-  ggplot(aes(x = `3_2_pointDifference`, y = `WIN%`, color = Team)) +
-  geom_point(size = 3) +
-  labs(
-    x = "2pt FGA - 3pt FGA",
-    y = "Win Percentage",
-    title = "Impact of 2-pt vs 3-pt Attempts on Playoff Win %"
-  )
-
 
 cor_3_2_pointDifference <- cor.test(nba_summary$`WIN%`, nba_summary$`3_2_pointDifference`)
 cor_3_2_pointDifference
@@ -302,60 +299,56 @@ While the results of the above graph may appear to show a correlation, a correla
 
 
 ```{r, include=FALSE}
-regression_data <- nba_24_25_playoff_team_data %>%
-  mutate(z_2p = scale(`FGM`),
-         z_3p = scale(`3PM`)
+
+
+regression_data <- nba_summary %>%
+  mutate(z_2p = scale(total_2FGM),
+         z_3p = scale(total_3FGM)
          ) %>%
   select(Team, z_2p, z_3p, `WIN%`)
 regression_data
 
 
 lm_team <- lm(`WIN%` ~ z_2p + z_3p, data = regression_data)
-summary(lm_team)
 
 
 
-linearHypothesis(lm_team, "z_2p = z_3p")
-
+x<-linearHypothesis(lm_team, "z_2p = z_3p")
+p_value <- x$`Pr(>F)`[2]
 
 ```
 
-$$Win\% = \beta_0 + \beta_1 x + \beta_2y + \varepsilon$$
 
 
 ```{r latex_eq, echo=FALSE, results='asis'}
-# --- Step 1: Extract coefficients ---
 coef_table <- summary(lm_team)$coefficients %>%
   as.data.frame()
 
-# Add Term column
 coef_table$Term <- rownames(coef_table)
 coef_table$Term[coef_table$Term == "(Intercept)"] <- "Intercept"
-coef_table$Term[coef_table$Term == "z_2p"] <- "FGM (z-score)"
-coef_table$Term[coef_table$Term == "z_3p"] <- "3PM (z-score)"
+coef_table$Term[coef_table$Term == "z_2p"] <- "2FGM (z-score)"
+coef_table$Term[coef_table$Term == "z_3p"] <- "3FGM (z-score)"
 
-# Keep only relevant rows
-coef_table <- coef_table[coef_table$Term %in% c("Intercept", "FGM (z-score)", "3PM (z-score)"), ]
+coef_table <- coef_table[coef_table$Term %in% c("Intercept", "2FGM (z-score)", "3FGM (z-score)"), ]
 rownames(coef_table) <- coef_table$Term
 
-# --- Step 2: Extract numeric values ---
 beta0 <- coef_table["Intercept", "Estimate"]
-beta1 <- coef_table["FGM (z-score)", "Estimate"]
-beta2 <- coef_table["3PM (z-score)", "Estimate"]
+beta1 <- coef_table["2FGM (z-score)", "Estimate"]
+beta2 <- coef_table["3FGM (z-score)", "Estimate"]
 
-# --- Step 3: Build LaTeX equation dynamically with error term ---
 latex_eq <- paste0(
   "\\hat{Win\\%} = ",
   round(beta0, 3),
-  ifelse(beta1 >= 0, " + ", " - "), abs(round(beta1, 3)), " \\cdot \\text{FGM (z-score)}",
-  ifelse(beta2 >= 0, " + ", " - "), abs(round(beta2, 3)), " \\cdot \\text{3PM (z-score)}",
+  ifelse(beta1 >= 0, " + ", " - "), abs(round(beta1, 3)), " \\cdot \\text{2FGM (z-score)}",
+  ifelse(beta2 >= 0, " + ", " - "), abs(round(beta2, 3)), " \\cdot \\text{3FGM (z-score)}",
   " + \\varepsilon"
 )
 
-# --- Step 4: Output LaTeX equation for knitting ---
 cat(paste0("$$", latex_eq, "$$"))
-
 ```
+
+
+After performing a regression analysis with win percentage as the response and 2FGM (z-score) and 3FGM (z-score) as predictors, we conducted a linear hypothesis test to compare the coefficients of 2FGM and 3FGM. The null hypothesis ($H_0: \beta_1 = \beta_2$) stated that the effects of 2FGM and 3FGM on win percentage are equal, while the alternative hypothesis ($H_a: \beta_1 \neq \beta_2$) stated that the effects are different. The resulting p-value was 0.238. Since this value is greater than the common significance level of 0.05, we fail to reject the null hypothesis. This indicates that there is not sufficient evidence to conclude that 2FGM and 3FGM have significantly different effects on win percentage, suggesting that their contributions to wins may be statistically similar.
 
 ## Discussion
 The correlations are as follows:
