@@ -274,12 +274,57 @@ cor_2vLoss
 #Looking at the correlation between 3 point shots and Losing
 cor_3vLoss
 
+
+# Create a summary table using your correlation tests
+correlation_table <- tibble(
+  `X variable` = c(
+    "2 FGM", "3 FGM", "2 FGM", "3 FGM"
+  ),
+  `Y variable` = c(
+    "3 FGM", "WIN%", "WIN%", "LOSS%"
+  ),
+  r = c(
+    cor_2v3$estimate,
+    cor_2vWin$estimate,
+    cor_3vWin$estimate,
+    cor_2vLoss$estimate
+  ),
+  p = c(
+    cor_2v3$p.value,
+    cor_2vWin$p.value,
+    cor_3vWin$p.value,
+    cor_2vLoss$p.value
+  )
+)
+
+correlation_table <- correlation_table %>%
+  mutate(Significant = ifelse(p < 0.05, "Yes", "No"))
+
 ```
-As seen below, there is not a strong correlation received between the amount of 2 and 3 point shots in the NBA playoffs. What the correlation rather shows is that for the most part, teams tend to favor one type of shot, but must shoot both 2 and 3 pointers throughout each game, whether that be due to what their offensive schema is, or how the defense protects certain areas of the court. This can possibly affect the other correlations but for now we will continue to compute, as the p value is quite high. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals, but again this correlation test cannot be statistically significant, given the high p value. Further, making more 2 point shots has a smaller negative correlation on the loss % of teams as well, but with these same discrepancies. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, losing playoff stints. However, since OKC won the Championship, and many other winning teams did not fall beyond the 2-point mean, converting large amounts of 2-point shots seem to have a greater relation to winning teams in the playoffs.
+
+
+```{r, echo=FALSE}
+
+
+knitr::kable(
+  correlation_table,
+  caption = "Correlation Tests Between 2- and 3-Point Field Goals and Winning/Losing"
+)
+
+
+```
+
+
+The correlation results show that while teams do vary in their preference for 2-point versus 3-point shots, these shooting patterns do not meaningfully predict playoff success. Although some of the raw correlations suggest small trends—for example, 2-point field goals show a slightly stronger association with win percentage than 3-point field goals—none of these relationships are statistically significant due to the high p-values. This means we cannot conclude that either type of shot has a real, measurable impact on winning or losing in the playoffs. Some variation in the data may be influenced by outlier teams, such as the Oklahoma City Thunder (OKC), who relied heavily on 2-point scoring while winning the championship, or the Los Angeles Lakers (LAL) and Miami Heat (MIA), who took a high volume of 3-pointers during short playoff runs. However, because these correlations are statistically weak, these team-specific tendencies should not be interpreted as evidence that one shooting style is more effective overall.
 
 
 
-```{r, include=FALSE}
+
+
+
+```{r,include=FALSE}
+
+
 
 cor_3_2_pointDifference <- cor.test(nba_summary$`WIN%`, nba_summary$`3_2_pointDifference`)
 cor_3_2_pointDifference
@@ -287,7 +332,10 @@ cor_3_2_pointDifference
 cor_2FGA_percent_vs_Win  <- cor.test(nba_summary$`WIN%`, nba_summary$`2FGA%`)
 cor_2FGA_percent_vs_Win 
 
+
+
 ```
+
 A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is also not stastically rlevant.
 
 
@@ -312,7 +360,7 @@ p_value <- x$`Pr(>F)`[2]
 
 ```
 
-
+In order to test how a team’s winning percentage was affected by the number of 2-point field goals made and 3-point field goals made, we conducted a regression analysis. The fitted regression equation is shown below.
 
 ```{r latex_eq, echo=FALSE, results='asis'}
 coef_table <- summary(lm_team)$coefficients %>%
@@ -334,8 +382,7 @@ latex_eq <- paste0(
   "\\hat{Win\\%} = ",
   round(beta0, 3),
   ifelse(beta1 >= 0, " + ", " - "), abs(round(beta1, 3)), " \\cdot \\text{2FGM (z-score)}",
-  ifelse(beta2 >= 0, " + ", " - "), abs(round(beta2, 3)), " \\cdot \\text{3FGM (z-score)}",
-  " + \\varepsilon"
+  ifelse(beta2 >= 0, " + ", " - "), abs(round(beta2, 3)), " \\cdot \\text{3FGM (z-score)}"
 )
 
 cat(paste0("$$", latex_eq, "$$"))
@@ -345,17 +392,30 @@ cat(paste0("$$", latex_eq, "$$"))
 After performing a regression analysis with win percentage as the response and 2FGM (z-score) and 3FGM (z-score) as predictors, we conducted a linear hypothesis test to compare the coefficients of 2FGM and 3FGM. The null hypothesis ($H_0: \beta_1 = \beta_2$) stated that the effects of 2FGM and 3FGM on win percentage are equal, while the alternative hypothesis ($H_a: \beta_1 \neq \beta_2$) stated that the effects are different. The resulting p-value was 0.238. Since this value is greater than the common significance level of 0.05, we fail to reject the null hypothesis. This indicates that there is not sufficient evidence to conclude that 2FGM and 3FGM have significantly different effects on win percentage, suggesting that their contributions to wins may be statistically similar.
 
 ## Discussion
-The correlations are as follows:
-
 
 ```{r, echo=FALSE}
 correlation_table <- tibble(
-  obseration_x = c("Above-the-break 3-point FG%","Left-corner 3 FG%","Right-corner 3 FG%","2-point FG made","3-point FG made","2-point FG made","2-point FG made","3-point FG made","2-pt minus 3-pt FGA","2-point FG%"),
-  observation_y = c("WIN%","WIN%","WIN%","WIN%","WIN%","3-point FG made","LOSS%","LOSS%","WIN%","WIN%"),
+  `X variable` = c(
+    "Above-the-break 3 FG%","Left-corner 3 FG%","Right-corner 3 FG%",
+    "2-point FG made","3-point FG made","2-point FG made",
+    "2-point FG made","3-point FG made","2-pt minus 3-pt FGA","2-point FG%"
+  ),
+  `Y variable` = c(
+    "WIN%","WIN%","WIN%","WIN%","WIN%","3-point FGM",
+    "LOSS%","LOSS%","WIN%","WIN%"
+  ),
   r = c(0.52, 0.47, 0.44, 0.048, 0.006, -0.124, -0.048, -0.006, 0.28, 0.28),
   p = c(0.038, 0.067, 0.088, 0.65, 0.95, 0.23, 0.65, 0.95, 0.34, 0.31)
 )
-knitr::kable(correlation_table)
+correlation_table <- correlation_table %>%
+  mutate(Significant = ifelse(p < 0.05, "Yes", "No"))
+
+knitr::kable(
+  correlation_table,
+  caption = "Summary of Correlation Tests"
+)
+
+
 ```
 
 
