@@ -223,6 +223,7 @@ After these graphs we can infer that 3 point shooting alone does not directly co
 
 
 ```{r, include=FALSE}
+
 #Looking at the correlation between 2 and 3 point shots
 cor_2v3 <- cor.test(nba_sum$`2 FGM`, nba_sum$`3 FGM`)
 cor_2vWin <- cor.test(nba_sum$`2 FGM`, nba_sum$`WIN%`)
