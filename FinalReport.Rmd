@@ -316,10 +316,46 @@ summary(lm_team)
 
 
 linearHypothesis(lm_team, "z_2p = z_3p")
+
+
 ```
 
 $$Win\% = \beta_0 + \beta_1 x + \beta_2y + \varepsilon$$
 
+
+```{r latex_eq, echo=FALSE, results='asis'}
+# --- Step 1: Extract coefficients ---
+coef_table <- summary(lm_team)$coefficients %>%
+  as.data.frame()
+
+# Add Term column
+coef_table$Term <- rownames(coef_table)
+coef_table$Term[coef_table$Term == "(Intercept)"] <- "Intercept"
+coef_table$Term[coef_table$Term == "z_2p"] <- "FGM (z-score)"
+coef_table$Term[coef_table$Term == "z_3p"] <- "3PM (z-score)"
+
+# Keep only relevant rows
+coef_table <- coef_table[coef_table$Term %in% c("Intercept", "FGM (z-score)", "3PM (z-score)"), ]
+rownames(coef_table) <- coef_table$Term
+
+# --- Step 2: Extract numeric values ---
+beta0 <- coef_table["Intercept", "Estimate"]
+beta1 <- coef_table["FGM (z-score)", "Estimate"]
+beta2 <- coef_table["3PM (z-score)", "Estimate"]
+
+# --- Step 3: Build LaTeX equation dynamically with error term ---
+latex_eq <- paste0(
+  "\\hat{Win\\%} = ",
+  round(beta0, 3),
+  ifelse(beta1 >= 0, " + ", " - "), abs(round(beta1, 3)), " \\cdot \\text{FGM (z-score)}",
+  ifelse(beta2 >= 0, " + ", " - "), abs(round(beta2, 3)), " \\cdot \\text{3PM (z-score)}",
+  " + \\varepsilon"
+)
+
+# --- Step 4: Output LaTeX equation for knitting ---
+cat(paste0("$$", latex_eq, "$$"))
+
+```
 
 ## Discussion
 The correlations are as follows:
