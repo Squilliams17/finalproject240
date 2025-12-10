@@ -1,7 +1,7 @@
 ---
 title: "Final Report"
 output: html_document
-date: "2025-12-9"
+date: "`r Sys.Date()`"
 author: Will Deley, Anish Mantri, Alexander Teran
 ---
 
@@ -246,7 +246,7 @@ nba_24_25_playoff_team_data %>%
     )
 ```
 
-After these graphs we can infer that 3 point shooting alone does not directly correlate to teams achieveing a high winning percentage in the playoffs. The charts show teams are most efficient when shooting the most 2 and 3 point field goals, which makes sense at that directly means they are scoring more points throughout the game. There is definetly an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game, while there are teams, such as the Boston Celtics (2023-24 NBA Champions), who shoot a much lower average of 2 point field goals, while being able to maintain a high winning percentage.
+After these graphs we can infer that 3 point shooting alone does not directly correlate to teams achieving a high winning percentage in the playoffs. The charts show teams are most efficient when shooting the most 2 and 3 point field goals, which makes sense as that directly means they are scoring more points throughout the game. There is definitely an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game, while there are teams, such as the Boston Celtics (2023-24 NBA Champions), who shoot a much lower average of 2 point field goals, while being able to maintain a high winning percentage.
 
 
 ```{r, include=FALSE}
@@ -275,7 +275,7 @@ cor_2vLoss
 cor_3vLoss
 
 ```
-There is a possibly non-negligible correlation received between the amount of 2 and 3 point shots in the NBA playoffs. Thus, for the most part teams tend to favor one type of shot. This can possibly affect the other correlations but for now we will continue to compute, as the p value is quite high. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals. Inversely making more 2 point shots has a larger negative correlation on the loss % of teams as well. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, losing playoff stints. However, since OKC won the Championship, any many other winning teams did not fall beyond the 2-point mean, large amounts of 2-point shots seem to have a greater correlation to winning teams.
+As seen below, there is not a strong correlation received between the amount of 2 and 3 point shots in the NBA playoffs. What the correlation rather shows is that for the most part, teams tend to favor one type of shot, but must shoot both 2 and 3 pointers throughout each game, whether that be due to what their offensive schema is, or how the defense protects certain areas of the court. This can possibly affect the other correlations but for now we will continue to compute, as the p value is quite high. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals, but again this correlation test cannot be statistically significant, given the high p value. Further, making more 2 point shots has a smaller negative correlation on the loss % of teams as well, but with these same discrepancies. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, losing playoff stints. However, since OKC won the Championship, and many other winning teams did not fall beyond the 2-point mean, converting large amounts of 2-point shots seem to have a greater relation to winning teams in the playoffs.
 
 
 
