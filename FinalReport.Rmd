@@ -77,8 +77,9 @@ The two data sets being analyzed are from the official NBA Statistics website, i
 
 Below is a visualization of the column sections for the shoot_data data set.
 ```{r, echo=FALSE}
-shooting_data_table <- tibble(rows = c("Player", "Restricred Area", "In the Paint (Non-RA)", "Mid-Range", "Left Corner 3", "Right Corner 3", "Corner 3", "Abover the Break 3", "2PT Field Goal", "3PT Field Goal"))
-print(shooting_data_table)
+shooting_data_table <- tibble(columns = c("Player", "Restricred Area", "In the Paint (Non-RA)", "Mid-Range", "Left Corner 3", "Right Corner 3", "Corner 3", "Abover the Break 3", "2PT Field Goal", "3PT Field Goal"))
+#print(shooting_data_table)
+knitr::kable(shooting_data_table)
 ```
 
 
@@ -194,7 +195,7 @@ nba_3v2FGM_plot <- nba_shared_data %>%
   geom_vline(xintercept = mean(nba_sum$`2 FGM`), linetype = "dashed", alpha = 0.5) +
   geom_hline(yintercept = mean(nba_sum$`3 FGM`), linetype = "dashed", alpha = 0.5) +
   labs(
-    y = "3-Point FG Made", x = "2-Point FG Made", title = "3 vs 2 Point Field Goals Made, by Player in 24-25 Playoffs"
+    y = "3-Point FG Made", x = "2-Point FG Made", title = "3 vs 2 Point Field Goals Made, By Player in 24-25 Playoffs"
     )
 
 interactive <- ggplotly(nba_3v2FGM_plot, tooltip = c("text", "x", "y"))
@@ -317,7 +318,7 @@ summary(lm_team)
 linearHypothesis(lm_team, "z_2p = z_3p")
 ```
 
-
+$$Win\% = \beta_0 + \beta_1 x + \beta_2y + \varepsilon$$
 
 
 ## Discussion
