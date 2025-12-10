@@ -86,11 +86,8 @@ nba_summary <- nba_24_25_playoff_shooting_data %>%
 The NBA playoffs are defined by high-stakes matchups, rapidly shifting strategies, and the constant search for competitive advantages. As modern basketball increasingly emphasizes spacing and perimeter shooting, an important analytical question emerges: To what extent does three-point shooting influence playoff success compared to two-point efficiency? In this report, we analyze team-level and player-level data from the 2024–2025 NBA playoffs to investigate how shooting performance across different zones—such as corner threes, above-the-break threes, and shots in the paint—relates to win percentage and overall postseason success. We aim to determine whether three-point percentage is a stronger predictor of playoff performance than two-point percentage, and which specific shooting areas contribute most to winning. We theorize that three-point efficiency is a significantly stronger predictor of playoff success than two-point efficiency in modern day basketball and that specific high-value shooting zones—particularly corner and above-the-break threes—provide meaningful competitive advantages for teams in the 2024–2025 NBA playoffs.
 
 ## Background
-<<<<<<< HEAD
-The two data sets being analyzed are from the official NBA Statistics website, in which data has been meticulously collected over the past several decades. The data is exclusively limited to playoff data, to disregard any intentional losing for future draft picks, or other reasons, that teams my do in the regular season. There are two data sets that are being analyzed in this report, individual player shooting data that will be referred to as shooting_data, and team performance data that will be referred to as team_data. Both data sets are kept to strictly the 2024-25 Playoff season. The data consists of 16 teams, 76 games, and a total of 96 players (top 6 players of each team). 
-=======
 The two data sets being analyzed are from the official NBA Statistics website, in which data has been meticulously collected over the past several decades. The data is exclusively limited to playoff data, to disregard any intentional loosing for future draft picks, or other reasons, that teams my do in the regular season. There are two data sets that are being analyzed in this report, individual player shooting data that will be referred to as shooting_data^[https://www.nba.com/stats/players/shooting?DistanceRange=By+Zone&Season=2024-25&SeasonType=Playoffs&PerMode=PerGame], and team performance data that will be referred to as team_data^[https://www.nba.com/stats/teams/traditional?PerMode=PerGame&SeasonType=Playoffs&Season=2024-25]
-. Both data sets are kept to strictly the 2024-25 Playoff season.
+. Both data sets are kept to strictly the 2024-25 Playoff season. The data consists of 16 teams, 76 games, and a total of 96 players (top 6 players of each team). 
 
 
 Below is a visualization of the column sections for the shoot_data data set.
@@ -102,8 +99,8 @@ knitr::kable(shooting_data_table)
 
 
 The shooting_data section looks at all players individual shooting statistics, averaged out per game in the playoffs. The first column name, Player, representes columns in the data set for the Player's description, include the player's name, team, and age. The other columns visualized above are locations of shots accross the court, with each section having three statistics FGM (Field Goals Made), FGA (Field Goals Attempted), and FG% (Field Goal %). 
->>>>>>> f72577ab9877ed84195d591bf4dc855479440cf8
-
+ 
+ 
 - Restricted Area: Right under the basket, typically layups and dunks. Must be taken in the semi circle painted on the court under the basket.
 - In the Paint (Non - RA): These are shots taken in the painted region of the basketball court, below the free throw line, not including Restricted Area shots. These can possibly be dunks or layups if a player jumps or reaches far enough.
 - Mid-Range: These are shots taken inside of the three point line that do not fall under the previous two categories.
@@ -278,7 +275,7 @@ cor_2vLoss
 cor_3vLoss
 
 ```
-The is a possibly non-negligible correlation received between the amount of 2 and 3 point shots in the NBA playoffs. Thus, for the most part teams tend to favor one type of shot. This can possibly affect the other correlations but for now we will continue to compute. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals. Inversely making more 2 point shots has a larger negative correlation on the loss % of teams as well. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, losing playoff stints. However, since OKC won the Championship, any many other winning teams did not fall beyond the 2-point mean, large amounts of 2-point shots seem to have a greater correlation to winning teams.
+There is a possibly non-negligible correlation received between the amount of 2 and 3 point shots in the NBA playoffs. Thus, for the most part teams tend to favor one type of shot. This can possibly affect the other correlations but for now we will continue to compute, as the p value is quite high. The correlation tests actually show that making more 2 point field goals has a higher correlation to winning percentage than 3 point field goals. Inversely making more 2 point shots has a larger negative correlation on the loss % of teams as well. This data could have been slightly skewed by the winning Oklahoma City Thunder (OKC) who shot more two point shots than any other team, and teams such as the Los Angeles Lakers (LAL) and Miami Heat (MIA) who shot a large majority of their shots from the 3 point range in their short, losing playoff stints. However, since OKC won the Championship, any many other winning teams did not fall beyond the 2-point mean, large amounts of 2-point shots seem to have a greater correlation to winning teams.
 
 
 
@@ -350,16 +347,17 @@ After performing a regression analysis with win percentage as the response and 2
 ## Discussion
 The correlations are as follows:
 
-1. Above-the-break 3-point FG% vs. WIN%: r = 0.52, p ≈ 0.038 (strongest among 3-point zones)
-2. Left-corner 3 FG% vs. WIN%: r = 0.47, p ≈ 0.067
-3. Right-corner 3 FG% vs. WIN%: r = 0.44, p ≈ 0.088
-4. 2-point FG made vs. WIN%: r = 0.048, p ≈ 0.65
-5. 3-point FG made vs. WIN%: r = 0.006, p ≈ 0.95
-6. 2 FGM vs 3 FGM: r = -0.124, p ≈ 0.23
-7. 2-point FG made vs. Loss%: r = -0.048, p ≈ 0.65
-8. 3-point FG made vs. Loss%: r = -0.006, p ≈ 0.95
-9. 2-pt minus 3-pt FGA vs. WIN%: r = 0.28, p ≈ 0.34 
-10. 2-point FG% vs. WIN%: r = 0.28, p ≈ 0.31 
+
+```{r, echo=FALSE}
+correlation_table <- tibble(
+  obseration_x = c("Above-the-break 3-point FG%","Left-corner 3 FG%","Right-corner 3 FG%","2-point FG made","3-point FG made","2-point FG made","2-point FG made","3-point FG made","2-pt minus 3-pt FGA","2-point FG%"),
+  observation_y = c("WIN%","WIN%","WIN%","WIN%","WIN%","3-point FG made","LOSS%","LOSS%","WIN%","WIN%"),
+  r = c(0.52, 0.47, 0.44, 0.048, 0.006, -0.124, -0.048, -0.006, 0.28, 0.28),
+  p = c(0.038, 0.067, 0.088, 0.65, 0.95, 0.23, 0.65, 0.95, 0.34, 0.31)
+)
+knitr::kable(correlation_table)
+```
+
 
 These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) are not statistically relevant for predicting playoff success. Additionally, the non-statistically significant correlation between 2-point and 3-point FGM with win percentage suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. This conclusion is supported by a regression-based hypothesis test, which found no statistically significant difference between the effects of 2FGM and 3FGM on win percentage. Overall, these findings indicate that only above-the-break three-point shooting demonstrates a statistically significant relationship with playoff success, while all other measures—including 2-point makes and 3-point makes or attempts—do not.
 For future research, analyzing a full regular-season dataset could reveal whether this trend holds outside the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how specific shooting performance affects playoff win probability.
