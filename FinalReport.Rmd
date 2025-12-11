@@ -92,7 +92,7 @@ The two data sets being analyzed are from the official NBA Statistics website, i
 
 Below is a visualization of the column sections for the shoot_data data set.
 ```{r, echo=FALSE}
-shooting_data_table <- tibble(columns = c("Player", "Restricred Area", "In the Paint (Non-RA)", "Mid-Range", "Left Corner 3", "Right Corner 3", "Corner 3", "Abover the Break 3", "2PT Field Goal", "3PT Field Goal"))
+shooting_data_table <- tibble(Columns = c("Player", "Restricred Area", "In the Paint (Non-RA)", "Mid-Range", "Left Corner 3", "Right Corner 3", "Corner 3", "Abover the Break 3", "2PT Field Goal", "3PT Field Goal"))
 #print(shooting_data_table)
 knitr::kable(shooting_data_table)
 ```
