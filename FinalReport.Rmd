@@ -300,31 +300,6 @@ correlation_table <- tibble(
 correlation_table <- correlation_table %>%
   mutate(Significant = ifelse(p < 0.05, "Yes", "No"))
 
-```
-
-
-```{r, echo=FALSE}
-
-
-knitr::kable(
-  correlation_table,
-  caption = "Correlation Tests Between 2- and 3-Point Field Goals and Winning/Losing"
-)
-
-
-```
-
-
-The correlation results show that while teams do vary in their preference for 2-point versus 3-point shots, these shooting patterns do not meaningfully predict playoff success. Although some of the raw correlations suggest small trends—for example, 2-point field goals show a slightly stronger association with win percentage than 3-point field goals—none of these relationships are statistically significant due to the high p-values. This means we cannot conclude that either type of shot has a real, measurable impact on winning or losing in the playoffs. Some variation in the data may be influenced by outlier teams, such as the Oklahoma City Thunder (OKC), who relied heavily on 2-point scoring while winning the championship, or the Los Angeles Lakers (LAL) and Miami Heat (MIA), who took a high volume of 3-pointers during short playoff runs. However, because these correlations are statistically weak, these team-specific tendencies should not be interpreted as evidence that one shooting style is more effective overall.
-
-
-
-
-
-
-```{r,include=FALSE}
-
-
 
 cor_3_2_pointDifference <- cor.test(nba_summary$`WIN%`, nba_summary$`3_2_pointDifference`)
 cor_3_2_pointDifference
@@ -336,8 +311,11 @@ cor_2FGA_percent_vs_Win
 
 ```
 
-A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is also not stastically rlevant.
 
+The graphs show that teams differ in their preference for 2-point versus 3-point shots, so these differences are visually noticeable. However, these patterns do not translate into meaningful correlations with playoff outcomes. Correlation tests confirm this: 2-point and 3-point field goals are weakly correlated with each other (r = -0.124, p = 0.230), and neither 2-point nor 3-point field goals significantly correlate with winning or losing percentages (all p-values > 0.6). Some variation in the data may be influenced by outlier teams, such as the Oklahoma City Thunder (OKC), who relied heavily on 2-point scoring while winning the championship, or the Los Angeles Lakers (LAL) and Miami Heat (MIA), who attempted a high volume of 3-pointers during shorter playoff runs. Despite these team-specific tendencies, the overall data and correlations indicate that no particular shooting style consistently predicts playoff success.
+
+
+A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is also not statistically significant.
 
 
 ```{r, include=FALSE}
@@ -417,9 +395,10 @@ knitr::kable(
 
 
 ```
+These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) are not statistically relevant for predicting playoff success. Additionally, the non-statistically significant correlation between 2-point and 3-point FGM with win percentage suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. This conclusion is further supported by a regression-based hypothesis test, which found no significant difference between the effects of 2FGM and 3FGM on win percentage. Overall, these findings suggest that only above-the-break three-point shooting demonstrates a statistically significant relationship with playoff success, while all other measures—including 2-point makes and 3-point makes or attempts—do not.
 
+Overall, these findings partially support our initial hypothesis: while we expected three-point efficiency in general to be a stronger predictor of playoff success, only above-the-break three-point shooting shows a statistically significant relationship, and other measures—including 2-point makes and overall 3-point makes or attempts—do not.
 
-These results indicate that above-the-break three-point shooting efficiency is the only measure among those tested that shows a statistically significant correlation with playoff win percentage. The other shooting zones and raw field goal volumes (2-point or 3-point) are not statistically relevant for predicting playoff success. Additionally, the non-statistically significant correlation between 2-point and 3-point FGM with win percentage suggests that while teams may favor one type of shot over another, this preference alone does not strongly predict playoff outcomes. This conclusion is supported by a regression-based hypothesis test, which found no statistically significant difference between the effects of 2FGM and 3FGM on win percentage. Overall, these findings indicate that only above-the-break three-point shooting demonstrates a statistically significant relationship with playoff success, while all other measures—including 2-point makes and 3-point makes or attempts—do not.
 For future research, analyzing a full regular-season dataset could reveal whether this trend holds outside the playoffs or if other patterns emerge. Investigating factors such as shot timing—like clutch three-pointers versus routine two-point attempts—may provide deeper insights into how specific shooting performance affects playoff win probability.
 
 ## Reference
