@@ -246,9 +246,6 @@ nba_24_25_playoff_team_data %>%
     )
 ```
 
-After these graphs we can infer that 3 point shooting alone does not directly correlate to teams achieving a high winning percentage in the playoffs. The charts show teams are most efficient when shooting the most 2 and 3 point field goals, which makes sense as that directly means they are scoring more points throughout the game. There is definitely an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game, while there are teams, such as the Boston Celtics (2023-24 NBA Champions), who shoot a much lower average of 2 point field goals, while being able to maintain a high winning percentage.
-
-
 ```{r, include=FALSE}
 
 #Looking at the correlation between 2 and 3 point shots
@@ -275,32 +272,6 @@ cor_2vLoss
 cor_3vLoss
 
 
-# Create a summary table using your correlation tests
-correlation_table <- tibble(
-  `X variable` = c(
-    "2 FGM", "3 FGM", "2 FGM", "3 FGM"
-  ),
-  `Y variable` = c(
-    "3 FGM", "WIN%", "WIN%", "LOSS%"
-  ),
-  r = c(
-    cor_2v3$estimate,
-    cor_2vWin$estimate,
-    cor_3vWin$estimate,
-    cor_2vLoss$estimate
-  ),
-  p = c(
-    cor_2v3$p.value,
-    cor_2vWin$p.value,
-    cor_3vWin$p.value,
-    cor_2vLoss$p.value
-  )
-)
-
-correlation_table <- correlation_table %>%
-  mutate(Significant = ifelse(p < 0.05, "Yes", "No"))
-
-
 cor_3_2_pointDifference <- cor.test(nba_summary$`WIN%`, nba_summary$`3_2_pointDifference`)
 cor_3_2_pointDifference
 
@@ -312,10 +283,12 @@ cor_2FGA_percent_vs_Win
 ```
 
 
-The graphs show that teams differ in their preference for 2-point versus 3-point shots, so these differences are visually noticeable. However, these patterns do not translate into meaningful correlations with playoff outcomes. Correlation tests confirm this: 2-point and 3-point field goals are weakly correlated with each other (r = -0.124, p = 0.230), and neither 2-point nor 3-point field goals significantly correlate with winning or losing percentages (all p-values > 0.6). Some variation in the data may be influenced by outlier teams, such as the Oklahoma City Thunder (OKC), who relied heavily on 2-point scoring while winning the championship, or the Los Angeles Lakers (LAL) and Miami Heat (MIA), who attempted a high volume of 3-pointers during shorter playoff runs. Despite these team-specific tendencies, the overall data and correlations indicate that no particular shooting style consistently predicts playoff success.
 
+From the preceding figures, we can infer that 3-point shooting alone does not directly correlate with teams achieving a high winning percentage in the playoffs. The charts show that teams generally have higher win percentages when making more 2- and 3-point field goals, which makes sense as this directly translates to scoring more points throughout the game. There is definitely an appearance of teams doing well that average more 2s than the average. However, it appears there is little to no success for teams that shoot well below the average amount of 3's in a game. Some teams, such as the Boston Celtics (2023–24 NBA Champions), are outliers, maintaining a high winning percentage despite a relatively low average of 2-point field goals.
 
-A correlation test suggests that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage. Similarly, the correlation between a team’s 2-point field goal attempt percentage (2FGA%) and win percentage is also not statistically significant.
+However, according to correlation tests, 2-point and 3-point field goals are weakly correlated with each other, and neither 2-point nor 3-point field goals significantly correlate with winning or losing percentages in the playoffs. Some variation may be influenced by outlier teams, such as the Oklahoma City Thunder (OKC), who relied heavily on 2-point scoring while winning the championship, or the Los Angeles Lakers (LAL) and Miami Heat (MIA), who attempted a high volume of 3-pointers during shorter playoff runs. 
+
+A correlation test also shows that the difference between 2-point and 3-point attempts is not statistically correlated with win percentage, and similarly, a team’s 2-point field goal attempt percentage (2FGA%) does not significantly correlate with playoff outcomes.
 
 
 ```{r, include=FALSE}
